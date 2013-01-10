@@ -31,8 +31,6 @@ namespace CoViVoServer
             byte[] array = new byte[1024];
             NetworkStream networkStream = tcpClient.GetStream();
             networkStream.Read(array, 0, 1024);
-            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-            Console.WriteLine(encoding.GetString(array));
             Message msg = Util.Unwrap(array);
             if (msg is JoinServer) {
                 JoinServer joinServerMsg = (JoinServer)msg;

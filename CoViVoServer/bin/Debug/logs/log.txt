@@ -13,3 +13,9 @@ INFO 2013-01-10 11:03:36 – deva has joined the server
 INFO 2013-01-10 11:03:36 – User list:
 INFO 2013-01-10 11:03:36 – -- deva
 INFO 2013-01-10 11:03:36 – -- deva
+INFO 2013-01-10 11:17:03 – deva has joined the server
+INFO 2013-01-10 11:17:03 – User list:
+INFO 2013-01-10 11:17:03 – -- deva
+INFO 2013-01-10 11:17:48 – deva has joined the server
+INFO 2013-01-10 11:17:48 – User list:
+INFO 2013-01-10 11:17:48 – -- deva
