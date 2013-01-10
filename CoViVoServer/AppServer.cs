@@ -29,6 +29,8 @@ namespace CoViVoServer
         public override void handleClient(TcpClient tcpClient)
         {
             byte[] array = new byte[1024];
+            NetworkStream networkStream = tcpClient.GetStream();
+            networkStream.Read(array, 0, 1024);
             Message msg = Util.Unwrap(array);
             if (msg is JoinServer) {
                 JoinServer joinServerMsg = (JoinServer)msg;
