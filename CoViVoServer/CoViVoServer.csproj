@@ -48,14 +48,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicServer.cs" />
     <Compile Include="AbstractServer.cs" />
-    <Compile Include="AppServer.cs" />
+    <Compile Include="AbstractUdpServer.cs" />
+    <Compile Include="BasicTcpServer.cs" />
+    <Compile Include="AbstractTcpServer.cs" />
+    <Compile Include="AppTcpServer.cs" />
+    <Compile Include="BasicUdpServer.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -19,3 +19,12 @@ INFO 2013-01-10 11:17:03 – -- deva
 INFO 2013-01-10 11:17:48 – deva has joined the server
 INFO 2013-01-10 11:17:48 – User list:
 INFO 2013-01-10 11:17:48 – -- deva
+2013-01-11 22:28:23,336 [8] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-11 22:32:14,672 [8] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-11 22:32:27,898 [9] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-11 22:33:05,458 [8] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-11 22:34:10,736 [8] INFO  CoViVoServer.AbstractServer (null) - Handle client in Abstract
+2013-01-11 22:34:10,739 [8] INFO  CoViVoServer.AbstractTcpServer (null) - Receive message
+2013-01-11 22:34:12,620 [8] INFO  CoViVoServer.AppTcpServer (null) - deva has joined the server
+2013-01-11 22:34:12,621 [8] INFO  CoViVoServer.AppTcpServer (null) - User list:
+2013-01-11 22:34:12,622 [8] INFO  CoViVoServer.AppTcpServer (null) - -- deva

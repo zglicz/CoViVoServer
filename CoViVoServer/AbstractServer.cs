@@ -5,33 +5,30 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
+using WrapperLib;
 
 namespace CoViVoServer
 {
     public abstract class AbstractServer
     {
-        private const int STANDARD_PORT = 9050;
-        private IPAddress addr = IPAddress.Any;
+        private static readonly ILog log = LogManager.GetLogger(typeof(AbstractServer));
+        protected IPAddress addr = IPAddress.Any;
         private int port;
-        protected TcpListener tcpListener;
 
-        protected AbstractServer() : this(STANDARD_PORT){
+        public AbstractServer() { 
         }
 
-        protected AbstractServer(int port) {
+        public AbstractServer(int port) {
             this.port = port;
-            this.tcpListener = new TcpListener(addr, port);
+            log.Info("Creating server");
         }
 
-        public void runServer() {
-            this.tcpListener.Start();
-            while (true)
-            {
-                TcpClient client = tcpListener.AcceptTcpClient();
-                handleClient(client);
-            }
+        public virtual void runServer() {
+            log.Info("Running server");
         }
-
-        public abstract void handleClient(TcpClient client);
+        public virtual void handleClient(Object client) {
+            log.Info("Handle client in Abstract");
+        }
     }
 }

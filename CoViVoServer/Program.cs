@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 namespace CoViVoServer
 {
     class TestProgram {
+        // tutaj wybierasz jaki typ serwera ma byc uruchomiony
+        static AbstractServer usedServer = new AppTcpServer();
         static void Main(string[] args)
         {
             log4net.Config.XmlConfigurator.Configure();
-            // mozna testowac. podstawowa obsluga klienta. patrze basicServer.handleConnection
-            /*AbstractServer basicServer = new BasicServer();
-            basicServer.runServer();*/
-            AbstractServer appServer = new AppServer();
-            appServer.runServer();
+            usedServer.runServer();
         }
     }
 }
