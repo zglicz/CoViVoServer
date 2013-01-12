@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,13 +15,16 @@ namespace CoViVoServer
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(AbstractServer));
         protected IPAddress addr = IPAddress.Any;
-        private int port;
+        protected ClientList clients;
+        protected ConcurrentDictionary<string, Channel> channels
+        { get; set; }
 
         public AbstractServer() { 
         }
 
-        public AbstractServer(int port) {
-            this.port = port;
+        public AbstractServer(ClientList clients) {
+            this.clients = clients;
+            this.channels = new ConcurrentDictionary<string, Channel>();
             log.Info("Creating server");
         }
 
@@ -29,6 +33,11 @@ namespace CoViVoServer
         }
         public virtual void handleClient(Object client) {
             log.Info("Handle client in Abstract");
+        }
+
+        public void eraseUser(Client client) {
+            //TODO: add erasing from channels
+            clients.delete(client);
         }
     }
 }

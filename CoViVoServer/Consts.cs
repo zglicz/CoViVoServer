@@ -9,7 +9,9 @@ namespace CoViVoServer
     public class Consts
     {
         public static int BUFFER_SIZE = 1024;
-        public const int STANDARD_TCP_PORT = 9050;
-        public const int STANDARD_UDP_PORT = 9051;
+        public static int STANDARD_TCP_PORT = 9050;
+        public static int STANDARD_UDP_PORT_RCV = 9051;
+        public static int STANDARD_UDP_PORT_SEND = 9052;
+        public static int REQUEST_TIME = 30 * 1000;
     }
 }

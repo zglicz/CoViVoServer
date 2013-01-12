@@ -4,17 +4,38 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoViVoServer
 {
     class TestProgram {
-        // tutaj wybierasz jaki typ serwera ma byc uruchomiony
-        static AbstractServer usedServer = new AppTcpServer();
+        public static void glownySposob() {
+            ClientList clients = new ClientList();
+            AbstractServer udpServer = new AppUdpServer(clients);
+            AbstractServer tcpServer = new AppTcpServer(clients);
+
+            Thread udpThread = new Thread(new ThreadStart(udpServer.runServer));
+            Thread tcpThread = new Thread(new ThreadStart(tcpServer.runServer));
+
+            udpThread.Start();
+            tcpThread.Start();
+        }
+
+        public static void basicTcp() {
+            AbstractServer basicTcpServer = new BasicTcpServer();
+            basicTcpServer.runServer();
+        }
+
+        public static void basicUdp() {
+            AbstractUdpServer basicUdpServer = new BasicUdpServer();
+            basicUdpServer.runServer();
+        }
+
         static void Main(string[] args)
         {
             log4net.Config.XmlConfigurator.Configure();
-            usedServer.runServer();
+            glownySposob();
         }
     }
 }

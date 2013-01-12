@@ -15,13 +15,16 @@ namespace CoViVoServer
         private static readonly ILog log = LogManager.GetLogger(typeof(AbstractTcpServer));
         protected TcpListener tcpListener;
 
-        protected AbstractTcpServer()
-            : this(Consts.STANDARD_TCP_PORT)
+        protected AbstractTcpServer() : this(new ClientList()) { 
+        }
+
+        protected AbstractTcpServer(ClientList clients)
+            : this(clients, Consts.STANDARD_TCP_PORT)
         {
         }
 
-        protected AbstractTcpServer(int port)
-            : base(port)
+        protected AbstractTcpServer(ClientList clients, int port)
+            : base(clients)
         {
             this.tcpListener = new TcpListener(addr, port);
         }

@@ -10,39 +10,31 @@ using WrapperLib;
 
 namespace CoViVoServer
 {
-    class AbstractUdpServer : AbstractServer
+    public class AbstractUdpServer : AbstractServer
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(AbstractUdpServer));
-        protected UdpClient serverUdp;
+        protected UdpClient listener;
+        protected UdpClient sender;
 
-        protected AbstractUdpServer()
-            : this(Consts.STANDARD_UDP_PORT)
+        public AbstractUdpServer() : this(new ClientList()) {
+        }
+
+        public AbstractUdpServer(ClientList clients)
+            : this(clients, Consts.STANDARD_UDP_PORT_RCV, Consts.STANDARD_UDP_PORT_SEND)
         {
         }
 
-
-        protected AbstractUdpServer(int port)
-            : base(port)
+        public AbstractUdpServer(ClientList clients, int rcv_port, int send_port)
+            : base(clients)
         {
-            this.serverUdp = new UdpClient(new IPEndPoint(addr, port));
-        }
-
-        public override void runServer()
-        {
-            base.runServer();
-            while (true)
-            {
-                IPEndPoint client = new IPEndPoint(addr, 0);
-                byte[] messageWrapped = serverUdp.Receive(ref client);
-                Message message = Util.Unwrap(messageWrapped);
-                handleClient(new Tuple<IPEndPoint, Message>(client, message));
-            }
+            this.listener = new UdpClient(new IPEndPoint(addr, rcv_port));
+            this.sender = new UdpClient(new IPEndPoint(addr, send_port));
         }
 
         public void sendMessage(IPEndPoint ipEndPoint, Message message) {
             log.Info("Send message to: " + ipEndPoint.ToString());
             byte[] messageWrapped = Util.Wrap(message);
-            serverUdp.Send(messageWrapped, messageWrapped.Length, ipEndPoint);
+            sender.Send(messageWrapped, messageWrapped.Length, ipEndPoint);
         }
     }
 }

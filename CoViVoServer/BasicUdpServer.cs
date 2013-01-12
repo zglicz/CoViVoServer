@@ -8,7 +8,7 @@ using WrapperLib;
 
 namespace CoViVoServer
 {
-    class BasicUdpServer : AbstractUdpServer
+    public class BasicUdpServer : AbstractUdpServer
     {
         /// <summary>
         ///     Przykladowe dzialanie serwera. Czeka na Alive. Odpowiada na nia : RequestAlive
@@ -24,6 +24,18 @@ namespace CoViVoServer
                 RequestAlive serverResponse = new RequestAlive();
                 serverResponse.parameters = "Witam witam";
                 sendMessage(clientAddress, serverResponse);
+            }
+        }
+
+        public override void runServer()
+        {
+            base.runServer();
+            while (true)
+            {
+                IPEndPoint client = new IPEndPoint(addr, 0);
+                byte[] messageWrapped = listener.Receive(ref client);
+                Message message = Util.Unwrap(messageWrapped);
+                handleClient(new Tuple<IPEndPoint, Message>(client, message));
             }
         }
     }

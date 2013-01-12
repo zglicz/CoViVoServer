@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,16 +14,15 @@ namespace CoViVoServer
     public class AppTcpServer : AbstractTcpServer {
 
         private static readonly ILog log = LogManager.GetLogger(typeof(AppTcpServer));
-        List<String> users;
-
-        public AppTcpServer() : base() {
-            users = new List<string>();
+        public AppTcpServer(ClientList clients)
+            : base(clients, Consts.STANDARD_TCP_PORT)
+        {
         }
 
         public void currentUserList() {
             log.Info("User list:");
-            foreach (String user in users) {
-                log.Info("-- " + user);
+            foreach (Client user in clients) {
+                log.Info(user);
             }
         }
 
@@ -30,20 +30,43 @@ namespace CoViVoServer
         {
             base.handleClient(client);
             TcpClient tcpClient = (TcpClient)client;
-            Message msg = receiveMessage(tcpClient);
-            if (msg is JoinServer) {
-                JoinServer joinServerMsg = (JoinServer)msg;
-                String userName = joinServerMsg.user;
-                users.Add(userName);
-                log.Info(userName + " has joined the server");
+            Message message = receiveMessage(tcpClient);
+            string userName = message.user;
+            log.Info("Received message: " + message.GetType().Name + " from: " + message.user);
+            Client requestClient = new Client(userName);
+            if (message is JoinServer) {
+                clients.Add(requestClient);
                 currentUserList();
+                log.Info(requestClient + " has joined the server");
             }
-            else if (msg is LeaveServer) {
-                LeaveServer leaveServerMsg = (LeaveServer)msg;
-                String userName = leaveServerMsg.user;
-                users.Remove(userName);
-                log.Info(userName + " has left the server");
+            else if (message is LeaveServer) {
+                eraseUser(requestClient);
                 currentUserList();
+                log.Info(requestClient + " has left the server");
+            }
+            else if (message is StartChannel) {
+                StartChannel startChannel = (StartChannel)message;
+                string channelName = startChannel.channelName;
+                channels[channelName] = new Channel(channelName, requestClient);
+                log.Info("Starting channel: " + channelName + " by: " + requestClient);
+            }
+            else if (message is JoinChannel) {
+                JoinChannel joinChannel = (JoinChannel)message;
+                string channelName = joinChannel.channelName;
+                channels[channelName].listeners.Add(requestClient);
+                log.Info("Join channel: " + channelName + " by: " + requestClient);
+            }
+            else if (message is LeaveChannel) {
+                LeaveChannel leaveChannel = (LeaveChannel)message;
+                string channelName = leaveChannel.channelName;
+                channels[channelName].listeners.Remove(requestClient);
+                log.Info("Join channel: " + channelName + " by: " + requestClient);
+            }
+            else if (message is RequestChannelList) { 
+                ChannelList channelList = new ChannelList();
+                channelList.channelList = channels.Keys.ToArray();
+                sendMessage(tcpClient, channelList);
+                log.Info("Answering channel list");
             }
             tcpClient.Close();
         }
