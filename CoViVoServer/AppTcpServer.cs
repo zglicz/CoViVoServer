@@ -54,7 +54,7 @@ namespace CoViVoServer
             else if (message is StartChannel) {
                 StartChannel startChannel = (StartChannel)message;
                 string channelName = startChannel.channelName;
-                channels[channelName] = new Channel(channelName, requestClient);
+                channels[channelName] = new Channel(channelName);
                 log.Info("Starting channel: " + channelName + " by: " + requestClient);
             }
             else if (message is JoinChannel) {
