@@ -28,10 +28,18 @@ namespace CoViVoServer
             Client recClient = new Client(message.user);
             log.Info("Received message: " + message.GetType().Name + " from: " + message.user);
             if (message is Alive) {
-                int x = clients.IndexOf(recClient); 
-                clients[x].lastAction = Utils.currentTimeInMillis();
-                clients[x].udpAddress = clientAddress;
-                log.Info("Alive from: " + message.user);
+                clients.printClients();
+                int x = clients.findClient(recClient);
+                if (x == -1)
+                {
+                    log.Debug("client not found");
+                }
+                else
+                {
+                    clients[x].lastAction = Utils.currentTimeInMillis();
+                    clients[x].udpAddress = clientAddress;
+                    log.Info("Alive from: " + message.user);
+                }
             }
             else if (message is ChannelData) { 
                 ChannelData channelMsg = (ChannelData)message;

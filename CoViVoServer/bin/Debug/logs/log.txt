@@ -25,3 +25,11 @@
 2013-01-12 22:54:29,920 [9] INFO  CoViVoServer.AbstractServer (null) - Creating server
 2013-01-12 22:54:29,953 [11] INFO  CoViVoServer.AbstractServer (null) - Running server
 2013-01-12 22:54:29,962 [10] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-16 15:58:45,210 [9] INFO  CoViVoServer.AbstractServer (null) - Creating server
+2013-01-16 15:58:45,297 [9] INFO  CoViVoServer.AbstractServer (null) - Creating server
+2013-01-16 15:58:45,320 [11] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-16 15:58:45,435 [10] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-17 11:28:42,458 [9] INFO  CoViVoServer.AbstractServer (null) - Creating server
+2013-01-17 11:28:42,637 [9] INFO  CoViVoServer.AbstractServer (null) - Creating server
+2013-01-17 11:28:42,678 [11] INFO  CoViVoServer.AbstractServer (null) - Running server
+2013-01-17 11:28:42,775 [10] INFO  CoViVoServer.AbstractServer (null) - Running server

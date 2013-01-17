@@ -19,14 +19,14 @@ namespace CoViVoServer
         }
 
         protected AbstractTcpServer(ClientList clients)
-            : this(clients, Consts.STANDARD_TCP_PORT)
+            : this(clients, Consts.STANDARD_TCP_PORT_RCV)
         {
         }
 
-        protected AbstractTcpServer(ClientList clients, int port)
+        protected AbstractTcpServer(ClientList clients, int send_port)
             : base(clients)
         {
-            this.tcpListener = new TcpListener(addr, port);
+            this.tcpListener = new TcpListener(addr, send_port);
         }
 
         public override void runServer()
@@ -40,11 +40,11 @@ namespace CoViVoServer
             }
         }
 
-        public void sendMessage(Object client, Message message)
+        public void sendMessage(TcpClient client, Message message)
         {
             log.Info("Sending message : " + message.GetType().Name);
             byte[] messageWrapped = Util.Wrap(message);
-            NetworkStream networkStream = ((TcpClient)client).GetStream();
+            NetworkStream networkStream = client.GetStream();
             networkStream.Write(messageWrapped, 0, messageWrapped.Length);
         }
 
