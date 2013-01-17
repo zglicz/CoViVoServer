@@ -34,6 +34,7 @@ namespace CoViVoServer
             string userName = message.user;
             log.Info("Received message: " + message.GetType().Name + " from: " + message.user);
             Client requestClient = new Client(userName);
+            int x = clients.findClient(requestClient);
             if (message is JoinServer) {
                 clients.Add(requestClient);
                 currentUserList();
@@ -47,14 +48,28 @@ namespace CoViVoServer
             else if (message is StartChannel) {
                 StartChannel startChannel = (StartChannel)message;
                 string channelName = startChannel.channelName;
-                channels[channelName] = new Channel(channelName, requestClient);
-                log.Info("Starting channel: " + channelName + " by: " + requestClient);
+                if (x == -1)
+                {
+                    log.Info("Unable to join, client not found");
+                }
+                else
+                {
+                    channels[channelName] = new Channel(channelName, clients[x]);
+                    log.Info("Starting channel: " + channelName + " by: " + clients[x]);
+                }
             }
             else if (message is JoinChannel) {
                 JoinChannel joinChannel = (JoinChannel)message;
                 string channelName = joinChannel.channelName;
-                channels[channelName].listeners.Add(requestClient);
-                log.Info("Join channel: " + channelName + " by: " + requestClient);
+                if (x == -1)
+                {
+                    log.Info("Unable to join, client not found");
+                }
+                else
+                {
+                    channels[channelName].listeners.Add(clients[x]);
+                    log.Info("Join channel: " + channelName + " by: " + clients[x]);
+                }
             }
             else if (message is LeaveChannel) {
                 LeaveChannel leaveChannel = (LeaveChannel)message;

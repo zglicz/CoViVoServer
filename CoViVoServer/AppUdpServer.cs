@@ -38,7 +38,7 @@ namespace CoViVoServer
                 {
                     clients[x].lastAction = Utils.currentTimeInMillis();
                     clients[x].udpAddress = clientAddress;
-                    log.Info("Alive from: " + message.user);
+                    log.Info("Alive from: " + message.user + " address: " + clientAddress);
                 }
             }
             else if (message is ChannelData) { 
