@@ -15,7 +15,7 @@ namespace CoViVoServer
 
         private static readonly ILog log = LogManager.GetLogger(typeof(AppTcpServer));
         public AppTcpServer(ClientList clients)
-            : base(clients, Consts.STANDARD_TCP_PORT)
+            : base(clients, Consts.STANDARD_TCP_PORT_RCV)
         {
         }
 

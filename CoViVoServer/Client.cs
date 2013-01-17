@@ -5,10 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 
 namespace CoViVoServer
 {
     public class ClientList : List<Client> {
+        private static readonly ILog log = LogManager.GetLogger(typeof(ClientList));
         public bool delete(Client client) {
             lock (this)
             {
@@ -18,6 +20,23 @@ namespace CoViVoServer
         public void add(Client client) {
             lock (this) {
                 this.Add(client);
+            }
+        }
+
+        public int findClient(Client client) { 
+            int x = 0;
+            foreach (Client clientIn in this) {
+                if (client.name.Equals(clientIn.name))
+                    return x;
+            }
+            return -1;
+        }
+
+        public void printClients()
+        {
+            log.Info("Client list:");
+            foreach(Client client in this) {
+                log.Info(client);
             }
         }
     }
