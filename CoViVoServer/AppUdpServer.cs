@@ -44,6 +44,7 @@ namespace CoViVoServer
             else if (message is ChannelData) { 
                 ChannelData channelMsg = (ChannelData)message;
                 string channelName = channelMsg.channelName;
+                log.Info("sending on channel: " + channelName);
                 Channel channel = channels[channelName];
                 log.Info("Broadcasting");
                 broadcast(channel, channelMsg);
@@ -53,8 +54,8 @@ namespace CoViVoServer
         public override void runServer()
         {
             base.runServer();
-            Thread check = new Thread(new ThreadStart(checkAlive));
-            check.Start();
+            //Thread check = new Thread(new ThreadStart(checkAlive));
+            //check.Start();
             while (true)
             {
                 IPEndPoint client = new IPEndPoint(addr, 0);
@@ -75,7 +76,7 @@ namespace CoViVoServer
                 }
             }
         }
-
+        /*
         public void checkAlive()
         {
             while (true)
@@ -91,6 +92,6 @@ namespace CoViVoServer
                 }
                 System.Threading.Thread.Sleep(Consts.REQUEST_TIME);
             }
-        }
+        }*/
     }
 }
