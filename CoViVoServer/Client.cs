@@ -23,6 +23,7 @@ namespace CoViVoServer
             }
         }
 
+
         public int findClient(Client client) { 
             int x = 0;
             foreach (Client clientIn in this) {

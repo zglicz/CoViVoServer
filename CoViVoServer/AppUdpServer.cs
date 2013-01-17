@@ -37,6 +37,7 @@ namespace CoViVoServer
                 else
                 {
                     clients[x].lastAction = Utils.currentTimeInMillis();
+                    clientAddress.Port++;
                     clients[x].udpAddress = clientAddress;
                     log.Info("Alive from: " + message.user + " address: " + clientAddress);
                 }
