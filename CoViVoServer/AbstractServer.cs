@@ -39,5 +39,12 @@ namespace CoViVoServer
             //TODO: add erasing from channels
             clients.delete(client);
         }
+
+        public void printChannels() {
+            log.Info("Channel list");
+            foreach (var pair in channels) { 
+                log.Info(" klucz [" + pair.Key + "] val: " + pair.Value);
+            }
+        }
     }
 }

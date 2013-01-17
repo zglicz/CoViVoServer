@@ -45,6 +45,7 @@ namespace CoViVoServer
                 ChannelData channelMsg = (ChannelData)message;
                 string channelName = channelMsg.channelName;
                 log.Info("sending on channel: " + channelName);
+                printChannels();
                 Channel channel = channels[channelName];
                 log.Info("Broadcasting");
                 broadcast(channel, channelMsg);
