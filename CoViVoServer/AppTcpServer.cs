@@ -33,10 +33,16 @@ namespace CoViVoServer
             Message message = receiveMessage(tcpClient);
             string userName = message.user;
             log.Info("Received message: " + message.GetType().Name + " from: " + message.user);
-            Client requestClient = new Client(userName);
-            int x = clients.findClient(requestClient);
+            Client requestClient = clients.findClient(message.user);
             if (message is JoinServer) {
-                clients.Add(requestClient);
+                if (requestClient == null)
+                {
+                    requestClient = new Client(message.user);
+                    clients.Add(requestClient);
+                }
+                else {
+                    log.Info("Client with name: " + requestClient.name + " already exists");
+                }
                 currentUserList();
                 log.Info(requestClient + " has joined the server");
             }
@@ -48,28 +54,14 @@ namespace CoViVoServer
             else if (message is StartChannel) {
                 StartChannel startChannel = (StartChannel)message;
                 string channelName = startChannel.channelName;
-                if (x == -1)
-                {
-                    log.Info("Unable to join, client not found");
-                }
-                else
-                {
-                    channels[channelName] = new Channel(channelName, clients[x]);
-                    log.Info("Starting channel: " + channelName + " by: " + clients[x]);
-                }
+                channels[channelName] = new Channel(channelName, requestClient);
+                log.Info("Starting channel: " + channelName + " by: " + requestClient);
             }
             else if (message is JoinChannel) {
                 JoinChannel joinChannel = (JoinChannel)message;
                 string channelName = joinChannel.channelName;
-                if (x == -1)
-                {
-                    log.Info("Unable to join, client not found");
-                }
-                else
-                {
-                    channels[channelName].listeners.Add(clients[x]);
-                    log.Info("Join channel: " + channelName + " by: " + clients[x]);
-                }
+                channels[channelName].listeners.Add(requestClient);
+                log.Info("Join channel: " + channelName + " by: " + requestClient);
             }
             else if (message is LeaveChannel) {
                 LeaveChannel leaveChannel = (LeaveChannel)message;

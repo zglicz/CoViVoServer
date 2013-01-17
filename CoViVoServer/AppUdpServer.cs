@@ -25,20 +25,18 @@ namespace CoViVoServer
             Tuple<IPEndPoint, Message> tuple = (Tuple<IPEndPoint, Message>)client;
             IPEndPoint clientAddress = tuple.Item1;
             Message message = tuple.Item2;
-            Client recClient = new Client(message.user);
+            Client recClient = clients.findClient(message.user);
             log.Info("Received message: " + message.GetType().Name + " from: " + message.user);
             if (message is Alive) {
-                clients.printClients();
-                int x = clients.findClient(recClient);
-                if (x == -1)
+                if (recClient == null)
                 {
                     log.Debug("client not found");
                 }
                 else
                 {
-                    clients[x].lastAction = Utils.currentTimeInMillis();
+                    recClient.lastAction = Utils.currentTimeInMillis();
                     clientAddress.Port++;
-                    clients[x].udpAddress = clientAddress;
+                    recClient.udpAddress = clientAddress;
                     log.Info("Alive from: " + message.user + " address: " + clientAddress);
                 }
             }

@@ -24,13 +24,12 @@ namespace CoViVoServer
         }
 
 
-        public int findClient(Client client) { 
-            int x = 0;
-            foreach (Client clientIn in this) {
-                if (client.name.Equals(clientIn.name))
-                    return x;
+        public Client findClient(String userName) { 
+            foreach (Client client in this) {
+                if (client.name.Equals(userName))
+                    return client;
             }
-            return -1;
+            return null;
         }
 
         public void printClients()
