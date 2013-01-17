@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,16 +16,16 @@ namespace CoViVoServer
         private static readonly ILog log = LogManager.GetLogger(typeof(AbstractTcpServer));
         protected TcpListener tcpListener;
 
-        protected AbstractTcpServer() : this(new ClientList()) { 
+        protected AbstractTcpServer() { 
         }
 
-        protected AbstractTcpServer(ClientList clients)
-            : this(clients, Consts.STANDARD_TCP_PORT_RCV)
+        protected AbstractTcpServer(ClientList clients, ConcurrentDictionary<string, Channel> channels)
+            : this(clients, channels, Consts.STANDARD_TCP_PORT_RCV)
         {
         }
 
-        protected AbstractTcpServer(ClientList clients, int send_port)
-            : base(clients)
+        protected AbstractTcpServer(ClientList clients, ConcurrentDictionary<string, Channel> channels, int send_port)
+            : base(clients, channels)
         {
             this.tcpListener = new TcpListener(addr, send_port);
         }

@@ -14,8 +14,8 @@ namespace CoViVoServer
     class AppUdpServer : AbstractUdpServer
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(AppUdpServer));
-        public AppUdpServer(ClientList clients)
-            : base(clients, Consts.STANDARD_UDP_PORT_RCV, Consts.STANDARD_UDP_PORT_SEND)
+        public AppUdpServer(ClientList clients, ConcurrentDictionary<string, Channel> channels)
+            : base(clients, channels, Consts.STANDARD_UDP_PORT_RCV, Consts.STANDARD_UDP_PORT_SEND)
         {
         }
 

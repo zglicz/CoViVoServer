@@ -22,9 +22,9 @@ namespace CoViVoServer
         public AbstractServer() { 
         }
 
-        public AbstractServer(ClientList clients) {
+        public AbstractServer(ClientList clients, ConcurrentDictionary<string, Channel> channels) {
             this.clients = clients;
-            this.channels = new ConcurrentDictionary<string, Channel>();
+            this.channels = channels;
             log.Info("Creating server");
         }
 
